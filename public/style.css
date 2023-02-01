@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.hamburguer{
+    padding-top: 20px;
+    padding-left: 20px;
+    background: #007bff;
+    height: 40px;
+}
+
+li{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.fa fa-bars{
+    size:20px;    
+}
+.everything{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    height: 100%;
+
+}
+
+.sidebar{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    top: 0;
+    background: #343a40;
+    color:#f4f6f9;
+    transition: 0.5s;
+    min-width: 120px;
+}
+#sidebar a{
+    color:aliceblue;
+}
+
+.content{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: #f4f6f9;
+    flex-grow: 4; 
+}
+
+
