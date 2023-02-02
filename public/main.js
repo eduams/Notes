@@ -7,18 +7,34 @@ const router = async () => {
     ];
 
 }
-
 //vai carregar os notes
-for(var i = 0; i < 9; i++){
-var notesListdiv = document.getElementById('links');
-var list = document.createElement('li');
-var link = document.createElement('a');
-var text = document.createTextNode('Notes group ' + i);
-list.appendChild(link);
-link.appendChild(text);
-notesListdiv.appendChild(list);
-link.href = "#" + i; 
-}
+
+    notes = fetch("notes.json")
+    .then(response => response.json())
+    .then(data => showInfo(data))
+
+    function showInfo(data){
+        for(var i = 0; i < 9; i++){
+            try {
+                var notesListdiv = document.getElementById('links');
+                var list = document.createElement('li');
+                var link = document.createElement('a');
+                var text = document.createTextNode(data.groups[i]['title']);
+                list.appendChild(link);
+                link.appendChild(text);
+                notesListdiv.appendChild(list);
+                link.href = "#" + i;    
+            } catch (exceptionVar) {
+                
+              } finally {
+                
+              }
+              
+        }
+
+
+    }
+
 
 function autoHide(){
     let sidebar = document.getElementById("sidebar");
@@ -32,7 +48,6 @@ function openbar(){
         let sidebar = document.getElementById("sidebar");
         var sidebarSize = sidebar.offsetWidth;
         sidebar.style.marginLeft = "0px";
-        console.log(sidebarSize);
         open = true;
         return;
     }
