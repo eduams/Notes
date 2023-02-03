@@ -2,9 +2,11 @@
         {
         "id": 0,
         "title": "Notes group 1",
-        "notes": {
-            "n1": "Teste teste teste teste!"
-        }
+        "notes": [
+            {
+            "note": "Teste teste teste teste!"
+            }
+        ]
     },
     {
         "id": 1,

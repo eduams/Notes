@@ -22,19 +22,34 @@ const router = async () => {
                 var text = document.createTextNode(data.groups[i]['title']);
                 list.appendChild(link);
                 link.appendChild(text);
+                link.setAttribute('id',i);
+                link.setAttribute('onclick', 'showNotes('+i+')');
                 notesListdiv.appendChild(list);
-                link.href = "#" + i;    
+                link.href = "#" + i;
             } catch (exceptionVar) {
                 
               } finally {
                 
-              }
-              
+          }          
         }
-
-
     }
 
+function showNotes(i){
+
+    var allNotes = () => {
+        for(var i = 0; i < 9; i++){
+        var content = document.getElementById('content');
+        var note = document.createElement('div');
+        note.setAttribute('class', 'note')
+        content.appendChild(note);
+        }
+    };
+
+    allNotes();
+
+
+    console.log(i)
+}
 
 function autoHide(){
     let sidebar = document.getElementById("sidebar");

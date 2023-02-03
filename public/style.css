@@ -2,11 +2,19 @@
     margin: 0;
     padding: 0;
 }
+
+.mainDiv{
+    display:flex;
+    flex-direction:column;
+}
+
 .hamburguer{
-    padding-top: 20px;
-    padding-left: 20px;
     background: #007bff;
-    height: 40px;
+    min-height: 5vh;
+}
+#hamburguer{
+    padding-top: 10px;
+    padding-left: 20px;
 }
 
 li{
@@ -17,12 +25,11 @@ li{
 .fa fa-bars{
     size:20px;    
 }
+
 .everything{
     display: flex;
     flex-direction: row;
-    position: absolute;
-    height: 100%;
-
+    min-height: 95vh;
 }
 
 .sidebar{
@@ -40,11 +47,28 @@ li{
 }
 
 .content{
+    align-content: flex-start;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
     padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
-    background: #f4f6f9;
+    background: #9ac3ff;
     flex-grow: 4; 
+    
+}
+
+.note{
+    margin: 20px;
+    flex-direction: row;
+    background: #a9ff15;
+    width: 200px;
+    height: 200px;
+    box-sizing: border-box;
+
 }
 
 
