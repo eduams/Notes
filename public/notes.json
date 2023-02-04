@@ -13,13 +13,15 @@
         "title": "Notes group 2",
         "notes": [
             {
-            "note": "Teste teste teste teste!"
+            "note": "Lembrete 1!"
+
         },
         {
-            "note": "Teste teste teste teste!"
+            "note": "Lembrete 2!"
+
         },
         {
-            "note": "Teste teste teste teste!"
+            "note": "Lembrete 3!"
         }
     ]
     },
@@ -29,6 +31,7 @@
         "notes": [
             {
             "note": "Teste teste teste teste!"
+
         }
     ]
     },
@@ -37,7 +40,7 @@
         "title": "Notes group 4",
         "notes": [
             {
-            "note": "Teste teste teste teste!"
+            "note": "Teste teste teste teste 2"
         }
     ]
     }
