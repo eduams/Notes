@@ -1,6 +1,9 @@
 var open;
-//tamanho do último pacote de notas carregado
-var lenght;
+var lenght; //tamanho do último pacote de notas carregado
+var addButtonDiv = document.getElementById('addButton_div');
+var addButton = document.getElementById('addButton');
+var addButton_selected = false;
+var currentNotesSize = 0;
 
 const router = async () => {
 
@@ -35,12 +38,12 @@ const router = async () => {
             } catch (exceptionVar) {
                 
               } finally {
-                
           }          
         }
     }
 
 function showNotes(i){
+    currentNotesSize = 0;
     //eliminar todas as notas carregadas
     try{
     var notesClass = document.getElementsByClassName('note');
@@ -50,30 +53,37 @@ function showNotes(i){
     }
     catch{}
 
+    //adiciona o onclick com a variável i no botão de adicionar notas
+    addButton.setAttribute('onclick', 'addNote('+i+')');
+
     //carregar novas notas
-    console.log(notesObject[i]);
     lenght = Object.keys(notesObject[i]['notes']).length;
     var allNotes = () => {
-
+        var content = document.getElementById('content');
         var note = {};
         var noteText = {};
         for(var x = 0; x < lenght; x++){
-        var content = document.getElementById('content');
         note[x] = document.createElement('div');
         note[x].setAttribute('class', 'note')
         note[x].setAttribute('id', 'note'+[x])
+        note[x].setAttribute('onclick', 'deleteNote'+'('+x+','+i+')')
         content.appendChild(note[x]);
         noteText[x] = document.createTextNode(notesObject[i]['notes'][x]['note']);
-        console.log(notesObject[i]['notes'][x])
         note[x].appendChild(noteText[x])
+        currentNotesSize++;
         }
     };
-
     allNotes();
-
-
-    console.log(i)
+    console.log(currentNotesSize);
 }
+
+function deleteNote(x,i){
+    console.log(x,i)
+    delete notesObject[i]['notes'][x];
+    currentNotesSize--;
+    showNotes(i);
+    console.log(notesObject);
+    }
 
 function autoHide(){
     let sidebar = document.getElementById("sidebar");
@@ -98,3 +108,37 @@ function openbar(){
         return;
     }
     }
+
+function addNote(i){
+    if(addButton_selected == false){
+    addButton.setAttribute('contenteditable','true')
+    addButton.focus();
+    saveNoteButton = document.createElement('div');
+    saveNoteButton.setAttribute('id', 'saveNote_button')
+    addButtonDiv.appendChild(saveNoteButton);
+    saveNoteButton.setAttribute('onclick','saveNote('+i+')')
+    addButton_selected = true;
+    }
+}
+
+function saveNote(i){
+    console.log(notesObject)
+
+    newNote = {note: document.getElementById('addButton').textContent};
+    newNotePlace = currentNotesSize;
+    notesObject[i]['notes'][newNotePlace] = newNote;
+    notesObjectwithGroups = {groups: notesObject};
+    
+    fetch("/post",
+    {
+        method: "POST",    
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(notesObjectwithGroups)
+    })
+
+    addButton.setAttribute('contenteditable','false')
+    saveNoteButton.remove();
+    addButton_selected = false;
+    currentNotesSize++;
+    showNotes(i);
+}
