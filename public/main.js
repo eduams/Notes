@@ -57,20 +57,31 @@ function showNotes(i){
     addButton.setAttribute('onclick', 'addNote('+i+')');
 
     //carregar novas notas
-    lenght = Object.keys(notesObject[i]['notes']).length;
+    lenght = Object.keys(notesObject[i]['notes']).length ;
     var allNotes = () => {
-        var content = document.getElementById('content');
-        var note = {};
-        var noteText = {};
-        for(var x = 0; x < lenght; x++){
-        note[x] = document.createElement('div');
-        note[x].setAttribute('class', 'note')
-        note[x].setAttribute('id', 'note'+[x])
-        note[x].setAttribute('onclick', 'deleteNote'+'('+x+','+i+')')
-        content.appendChild(note[x]);
-        noteText[x] = document.createTextNode(notesObject[i]['notes'][x]['note']);
-        note[x].appendChild(noteText[x])
-        currentNotesSize++;
+
+            var content = document.getElementById('content');
+            var note = {};
+            var noteText = {};
+            for(var x = 0; x < lenght; x++){
+                try{
+                if(notesObject[i]['notes'][x]['note'] === null){
+                    break
+                }
+                else{
+                noteText[x] = document.createTextNode(notesObject[i]['notes'][x]['note']);
+                note[x] = document.createElement('div');
+                note[x].setAttribute('class', 'note')
+                note[x].setAttribute('id', 'note'+[x])
+                note[x].setAttribute('onclick', 'deleteNote'+'('+x+','+i+')')
+                content.appendChild(note[x]);
+                note[x].appendChild(noteText[x])
+                currentNotesSize++;
+            }
+                }
+                catch{
+                    console.log('Erro ao ler nota. Pulando...')
+                }
         }
     };
     allNotes();
@@ -78,11 +89,27 @@ function showNotes(i){
 }
 
 function deleteNote(x,i){
-    console.log(x,i)
-    delete notesObject[i]['notes'][x];
-    currentNotesSize--;
-    showNotes(i);
+    console.log(x,i);
+    console.log(currentNotesSize);
+    if (currentNotesSize == 1){
+    notesObject[i]['notes'][x] = {'note': null};
+    }
+    else{
+    notesObject[i].notes.splice(x, 1);
+    }
+
+    console.log(notesObject)
+
+    notesObjectwithGroups = {groups: notesObject};
+    fetch("/post",
+    {
+        method: "POST",    
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(notesObjectwithGroups)
+    })
+
     console.log(notesObject);
+    showNotes(i);
     }
 
 function autoHide(){
@@ -122,11 +149,32 @@ function addNote(i){
 }
 
 function saveNote(i){
+    deletedSearch = null;
+    var y;
+
+    for (y = 0;deletedSearch !== undefined; 0){
+        noteString = notesObject[i]['notes'][y]['note'];
+        if(noteString === '/deleted'){
+            break
+        }
+        y++;
+        deletedSearch = notesObject[i]['notes'][y];
+        console.log(deletedSearch);
+    }
+
     console.log(notesObject)
 
     newNote = {note: document.getElementById('addButton').textContent};
-    newNotePlace = currentNotesSize;
-    notesObject[i]['notes'][newNotePlace] = newNote;
+
+    if(deletedSearch === undefined){
+        newNotePlace = currentNotesSize;
+        notesObject[i]['notes'][newNotePlace] = newNote;
+        currentNotesSize++;
+    }
+    else{
+        notesObject[i]['notes'][y] = newNote;
+    }
+
     notesObjectwithGroups = {groups: notesObject};
     
     fetch("/post",
@@ -139,6 +187,5 @@ function saveNote(i){
     addButton.setAttribute('contenteditable','false')
     saveNoteButton.remove();
     addButton_selected = false;
-    currentNotesSize++;
     showNotes(i);
 }
