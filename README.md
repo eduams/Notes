@@ -1,2 +1,3 @@
 # Notes
-SPA para lembretes sem o uso de frameworks.
+Este é um aplicativo web que carrega notas de um arquivo JSON e permite que o usuário visualize e edite essas notas. O aplicativo usa JavaScript puro para manipular o DOM e interagir com o servidor. Quando o usuário seleciona uma categoria de notas, o aplicativo exibe todas as notas dessa categoria. O usuário pode adicionar uma nova nota clicando em um botão de adicionar nota e digitando o texto da nota. As notas são salvas automaticamente quando o usuário cria ou exclui uma nota. O aplicativo usa o método POST para enviar as atualizações para o servidor.
+![](https://i.imgur.com/VFciFry.png)
