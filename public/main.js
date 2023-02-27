@@ -28,11 +28,16 @@ const router = async () => {
                 var list = document.createElement('li');
                 var link = document.createElement('a');
                 var text = document.createTextNode(data.groups[i]['title']);
+                var deleteIcon = document.createElement('i');
+                deleteIcon.style.display = 'none'
+                deleteIcon.setAttribute('class', 'fa fa-trash');
                 list.appendChild(link);
                 link.appendChild(text);
+                notesListdiv.appendChild(deleteIcon);
                 link.setAttribute('id',i);
                 notesObject[i]= data.groups[i];
                 link.setAttribute('onclick', 'showNotes('+i+')');
+                link.setAttribute('onmouseenter', 'showDeleteIcon('+i+')');
                 notesListdiv.appendChild(list);
                 link.href = "#" + i;
             } catch (exceptionVar) {
@@ -41,6 +46,11 @@ const router = async () => {
           }          
         }
     }
+
+function addNoteGroup(){
+
+    //.setAttribute('contenteditable','true')
+}
 
 function showNotes(i){
     currentNotesSize = 0;
